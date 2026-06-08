@@ -3,6 +3,7 @@
 ## Module Overview
 
 This module deepens Python knowledge beyond fundamentals and focuses on scalable, high-performance, and production-ready systems. Students learn advanced programming paradigms, concurrency, GPU concepts, software architecture, API design, and cloud deployment principles. The course bridges academic programming with real-world data science engineering practices.
+
 ---
 
 ## Module Schedule
