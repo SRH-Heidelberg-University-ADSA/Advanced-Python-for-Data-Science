@@ -11,8 +11,8 @@ def generator():
 result = generator()
 print(result)
 
-a = result.__next__()
-print(a)
+# a = result.__next__()
+# print(a)
 result.send(100)
 # result.__next__()
 # result.__next__()
@@ -38,7 +38,7 @@ for i in range(10):
 
 f = open()
 
-with open() as f:
+# with open() as f:
 
-    a = [x for x in range(1, 100)]
-    a = (x for x in rapge(0, 100))
+#   a = [x for x in range(1, 100)]
+#   a = (x for x in rapge(0, 100))
