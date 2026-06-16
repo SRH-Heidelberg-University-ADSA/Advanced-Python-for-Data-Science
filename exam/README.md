@@ -6,16 +6,20 @@
 
 
 - miletone 1: 22 June 
+
   expectation : finalize data source and data points from each data source
 
 - milestone 2: 29 June
+
   expectation: overall system design and architecture
   
 - milestone 3: 13 July 
-expectation: first POC of a working code for your project
+
+  expectation: first POC of a working code for your project
 
 - milestone 4: 20 July
-expectation: further clarifications or open points from any group
+
+  expectation: further clarifications or open points from any group
 
 ### Final exam
 -   Date : 27 July 2026
