@@ -1,0 +1,91 @@
+name : linear regression flask app
+
+# triggers
+on:
+  push:
+    branches: [main]
+    paths:
+      - "Week5/**"
+  pull_request:
+    branches: [main]
+    paths:
+      - "Week5/**"
+
+jobs:
+  lint:
+    name: Lint (flake8)
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: model_serving
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: setup python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: install linting
+        run: pip install flake8
+
+      - name: run linting
+        run: flake8 . --max-line-length=100
+#----
+  test:
+    name: Unit test (pytest)
+    runs-on: ubuntu-latest
+    needs: lint
+
+    defaults:
+      run:
+        working-directory: model_serving
+
+    steps:
+      - name: checkout respository
+        uses: actions/checkout@v4
+
+      - name: setup python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: install pytest
+        run: pip install pytest
+
+      - name: run unit test
+        run: pytest app_test.py -v
+#-----
+  build:
+    name: build and push docker image
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+
+      - name: build and push docker image 
+        if: github.event_name == 'push' && github.ref == "refs/heads/main"
+        
+      - name: Login to Docker Hub
+        uses: docker/login-action@v4
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v4
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      -
+        name: Build and push
+        uses: docker/build-push-action@v7
+        with:
+          push: true
+          tags: anil17/srh:2026
+    

@@ -4,9 +4,7 @@ from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
-with open(
-    "/Users/D068192/dev/codes/git/srh/Advanced-Python-for-Data-Science/model.pkl", "rb"
-) as f:
+with open("model.pkl", "rb") as f:
     model = pickle.load(f)
 
 
@@ -35,4 +33,4 @@ def predict():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=5000, host="0.0.0.0")
