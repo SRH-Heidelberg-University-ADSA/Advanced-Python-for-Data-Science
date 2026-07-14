@@ -1,0 +1,25 @@
+# Base runtime image
+FROM python:3.10-slim
+
+
+#run in unbuffered mode, meaning that output from print() statements and logging is written directly to the console without being buffered.
+ENV PYTHONUNBUFFERED=1
+
+# enables the interactive debugger, allowing you to inspect errors in the browser when something goes wrong.
+ENV FLASK_ENV=development
+
+# Set working directory
+WORKDIR /app
+
+# Install dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application code
+COPY . .
+
+# Expose flask port
+EXPOSE 5000
+
+# Run flask app
+CMD ["python", "docker.py"]

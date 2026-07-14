@@ -1,0 +1,36 @@
+# Use a lightweight Python image
+FROM python:3.10-slim
+
+# Environment variables
+ENV PYTHONUNBUFFERED=1
+
+# disables the interactive debugger and reloader, improving security and stability.
+# Intended for deployment in real environments
+ENV FLASK_ENV=production
+
+# Set working directory inside the container
+WORKDIR /app
+
+# Copy dependencies and install
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy project files
+COPY . .
+
+# Expose Flask port- 8080 for Waitress, default 5000
+EXPOSE 8080
+
+# Expose Flask port- 8000 for Gunicorn
+EXPOSE 8000
+
+
+
+# Run Waitress as production server
+CMD ["waitress-serve", "--listen=0.0.0.0:8080", "run_prod:app"]
+
+
+# Run Gunicorn as production server
+#CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:8000", "run_prod:app"]
+#CMD ["python", "run_prod.py"]
+
