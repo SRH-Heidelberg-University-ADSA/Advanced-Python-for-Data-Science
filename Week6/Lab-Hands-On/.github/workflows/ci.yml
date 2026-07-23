@@ -1,0 +1,38 @@
+name: CI
+
+# Triggers: this workflow runs automatically whenever someone pushes to main,
+# or opens/updates a pull request targeting main.
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    # The job runs on a fresh GitHub-hosted virtual machine (the "runner").
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: pull the repository code onto the runner
+      - name: Check out repository
+      # actions/checkout@v5 is an official GitHub Action that downloads (checks out) your repository's source code 
+      # onto the GitHub Actions runner so that subsequent workflow steps can access and use the project files.
+        uses: actions/checkout@v5
+
+      # Step 2: set up the Python version the app needs
+      - name: Set up Python
+      # actions/setup-python@v6 is an official GitHub Action that installs and configures a specific version of Python on the GitHub Actions runner.
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.10"
+
+      # Step 3: install dependencies
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # Step 4: run the test suite. If any test fails, the whole workflow fails
+      # and (in a real repo) blocks the pull request from being merged.
+      - name: Run tests
+      # runs the project's automated tests using the pytest testing framework in verbose mode.
+        run: pytest -v

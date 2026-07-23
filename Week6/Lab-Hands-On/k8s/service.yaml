@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  # Name of the Kubernetes Service.
+  name: flask-service
+
+spec:
+  # Expose the service through a fixed port on the cluster node.
+  type: NodePort
+
+  # Route traffic to Pods with this label.
+  selector:
+    app: flask-app
+
+  ports:
+    # Service port and container port mapping.
+    - port: 5000
+      targetPort: 5000
+
+      # External port used to access the service from the host machine.
+      nodePort: 30036

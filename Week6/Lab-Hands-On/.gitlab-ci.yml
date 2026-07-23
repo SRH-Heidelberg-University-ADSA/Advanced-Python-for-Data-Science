@@ -1,0 +1,20 @@
+# GitLab CI equivalent of .github/workflows/ci.yml
+# Compare the structure directly against the GitHub Actions file:
+# - "on:" triggers      -> handled implicitly by GitLab (pipelines run on every push by default)
+# - "jobs:"             -> also called "jobs:" in GitLab, grouped under "stages:"
+# - "runs-on:"          -> "image:" (the Docker image the job runs inside)
+# - "steps:"            -> "script:" (a flat list of shell commands)
+
+stages:
+  - test
+
+build-and-test:
+  stage: test
+  image: python:3.10-slim
+  before_script:
+    - pip install -r requirements.txt
+  script:
+    - pytest -v
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'

@@ -1,0 +1,28 @@
+services:
+  # Flask web application service.
+  web:
+    # Build the Docker image using the Dockerfile in the current directory.
+    build: .
+
+    # Map the host port 5000 to the container port 5000.
+    ports:
+      - "5000:5000"
+
+    # Provide application configuration through an environment variable.
+    environment:
+      - APP_VERSION=1.0.0
+
+    # Restart the container automatically if it stops unexpectedly.
+    # Similar to the self-healing behaviour provided by Kubernetes.
+    restart: unless-stopped
+
+
+  # Redis (REmote DIctionary Server) is an open source, in-memory, NoSQL data store 
+  # used primarily as an application cache or quick-response database
+  redis:
+    # Use the lightweight Redis 7 Alpine Docker image.
+    image: redis:7-alpine
+
+    # Expose Redis on the default port.
+    ports:
+      - "6379:6379"

@@ -1,0 +1,23 @@
+# This manifest is for REVIEW, not execution - it requires a cluster with an
+# actual GPU node and the NVIDIA device plugin installed (e.g. a cloud GPU node
+# pool), which we don't assume you have locally.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: gpu-training-job
+spec:
+  containers:
+    - name: cuda-container
+      image: nvidia/cuda:12.4.1-base-ubuntu22.04
+      command: ["nvidia-smi"]
+      resources:
+        limits:
+          # This is the line that actually requests a GPU. Kubernetes will only
+          # schedule this Pod onto a node that (a) has a GPU and (b) is running
+          # the NVIDIA device plugin, which advertises "nvidia.com/gpu" as a
+          # schedulable resource - the same way "cpu" and "memory" are.
+          nvidia.com/gpu: 1
+  # nodeSelector restricts scheduling to nodes labeled as GPU nodes, which is
+  # how mixed CPU/GPU clusters keep GPU-hungry pods off plain CPU nodes.
+  nodeSelector:
+    accelerator: nvidia-gpu
