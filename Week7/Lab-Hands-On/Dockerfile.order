@@ -1,0 +1,21 @@
+# Use a lightweight Python 3.11 base image.
+FROM python:3.11-slim
+
+# Set the working directory inside the container.
+WORKDIR /app
+
+# Copy dependency file into the container.
+COPY requirements.txt .
+
+# Install required Python packages.
+# --no-cache-dir reduces the image size by removing pip cache files.
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the application code into the container.
+COPY order_service.py .
+
+# Document that the application listens on port 5000.
+EXPOSE 5000
+
+# Start the Order Service when the container runs.
+CMD ["python", "order_service.py"]

@@ -1,0 +1,35 @@
+# Define the services that make up the application.
+services:
+
+  # Inventory microservice.
+  inventory:
+    # Build the image using the specified Dockerfile.
+    build:
+      context: .
+      dockerfile: Dockerfile.inventory
+
+    # Map container port 5001 to the host machine.
+    ports:
+      - "5001:5001"
+
+
+  # Order microservice.
+  order:
+    # Build the image using the specified Dockerfile.
+    build:
+      context: .
+      dockerfile: Dockerfile.order
+
+    # Expose the Order Service on port 5000.
+    ports:
+      - "5000:5000"
+
+    # Start the Inventory Service before starting the Order Service.
+    depends_on:
+      - inventory
+
+    # Configure the Inventory Service URL inside the container.
+    # Docker Compose provides service-name-based networking.
+    # "inventory" resolves automatically to the inventory container.
+    environment:
+      - INVENTORY_SERVICE_URL=http://inventory:5001

@@ -1,0 +1,21 @@
+# Use a lightweight Python 3.11 image as the base environment.
+FROM python:3.11-slim
+
+# Set the working directory inside the container.
+WORKDIR /app
+
+# Copy the dependency file into the container.
+COPY requirements.txt .
+
+# Install Python dependencies required by the service.
+# The cache is disabled to keep the image smaller.
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the Inventory Service application code.
+COPY inventory_service.py .
+
+# Document the port used by the Flask application.
+EXPOSE 5001
+
+# Start the Inventory Service when the container launches.
+CMD ["python", "inventory_service.py"]
