@@ -34,7 +34,7 @@
     - code level architecture
     - further improvements
     - learnings   
-    - Every participant must upload the private github repo link in [moodle](https://ecampus.srh-university.de/mod/assign/view.php?id=147512) until 15:00 of July 27
+    - Every participant must upload the private github repo link in [moodle](https://ecampus.srh-university.de/mod/assign/view.php?id=147512) until 17:30 of July 27
     - Participants of the same same group should upload the same github repo link
 
 ### Project groups and group github repository
